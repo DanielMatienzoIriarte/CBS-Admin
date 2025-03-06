@@ -10,18 +10,16 @@ class DashboardController extends Controller
 {
     public function index() {
         if(Auth::check()) {
-            $userType = Auth()->user();
+            $loggedUser = Auth()->user(); 
 
-            dd($userType);
-            switch($userType) {
+            switch($loggedUser->getRoleNames()[0]) {
                 case 'admin':
-                    dd('28');
-                    return view('dashboard.index');
+                    return view('dashboard');
+                default:
+                    return redirect()->back();
             }
         } else {
-
-            dd('13');
-            return view('dashboard.index');
+            return redirect()->back();
         }
 
     }
